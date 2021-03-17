@@ -17,4 +17,28 @@
     7. Add a function to measure time and send updates to function 7
     8. Add a function to update current day at the top of the page */
 
-    
+var tasks = [];
+
+// save button was clicked
+$(".saveBtn").click(function() {
+    // determine which time slot the button was clicked in
+    var taskTime = $(this).attr('id');
+    // get the task description
+    var taskText = $("#" + taskTime).val();
+
+    // store the values into the tasks variable
+    if (taskText) {
+        tasks.push({
+            text: taskText,
+            date: taskTime
+        });
+
+        saveTasks();
+    }
+});
+
+// load tasks function
+
+var saveTasks = function() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
