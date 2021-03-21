@@ -38,6 +38,16 @@ $(".saveBtn").click(function() {
 var loadTasks = function() {
     tasks = JSON.parse(localStorage.getItem("tasks"));
 
+    // if nothing in localStorage, create new object
+    if (!tasks) {
+        tasks = {
+            text: [],
+            time: []
+        };
+        saveTasks();
+        return;
+    }
+
     $('textarea').each(function(index, value) {
         var time = (this.id);
         
