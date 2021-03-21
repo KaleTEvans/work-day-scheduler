@@ -40,7 +40,7 @@ var loadTasks = function() {
 
     $('textarea').each(function(index, value) {
         var time = (this.id);
-        console.log(time);
+        
         tasks.forEach(function(item) {
             if (item.time === time) {
                 console.log("true");
@@ -54,14 +54,40 @@ var loadTasks = function() {
 
 };
 
+// function to siplay current day at top of the page
+$(document).ready(function () {
+    
+    var currentDate = moment().format("dddd, MMM Do YYYY");
+    $("#currentDay").html(currentDate);
+
+});
+
 // function to track hours of the day
 var timeSlots = function() {
     // get the time data
     var currentTime = moment().hour();
+    console.log(currentTime);
     //
     $(".description").each(function() {
-        var hourSlot = parseInt($(this).attr("id").split(hour)[1]);
-    })
+        var hourSlot = parseInt($(this).attr("id"));
+        console.log(hourSlot);
+        // color code the hours 
+        if (hourSlot < currentTime) {
+            $(this).addClass("past");
+            $(this).removeClass("future");
+            $(this).removeClass("present");
+        }
+        else if (hourSlot === currentTime) {
+            $(this).removeClass("past");
+            $(this).addClass("present");
+            $(this).removeClass("future");
+        }
+        else {
+            $(this).removeClass("present");
+            $(this).removeClass("past");
+            $(this).addClass("future");
+        }
+    });
 }
 
 var saveTasks = function() {
@@ -69,3 +95,4 @@ var saveTasks = function() {
 }
 
 loadTasks();
+timeSlots();
