@@ -25,6 +25,12 @@ $(".saveBtn").click(function() {
     // store the values into the tasks variable
     if (taskText) {
 
+        tasks = JSON.parse(localStorage.getItem("tasks"));
+
+        if (!tasks) {
+            tasks = [];
+        }
+
         tasks.push({
             text: taskText,
             time: taskTime
@@ -32,35 +38,28 @@ $(".saveBtn").click(function() {
 
         saveTasks();
     }
+
 });
 
 // load tasks function
 var loadTasks = function() {
     tasks = JSON.parse(localStorage.getItem("tasks"));
 
-    // if nothing in localStorage, create new object
-    if (!tasks) {
-        tasks = {
-            text: [],
-            time: []
-        };
-        saveTasks();
-        return;
-    }
-
-    $('textarea').each(function(index, value) {
-        var time = (this.id);
-        
-        tasks.forEach(function(item) {
-            if (item.time === time) {
-                console.log("true");
-                $("#" + time).text(item.text);
-            }
-            else {
-                return;
-            }
+    if (tasks) {
+        $('textarea').each(function(index, value) {
+            var time = (this.id);
+            
+            tasks.forEach(function(item) {
+                if (item.time === time) {
+                    console.log("true");
+                    $("#" + time).text(item.text);
+                }
+                else {
+                    return;
+                }
+            });
         });
-    });
+    }
 
 };
 
